@@ -1,3 +1,5 @@
+R강의 실습에 대한 내용입니다.
+
 "# R" 
 
 setwd("D:/workspace/R_Data_Analysis/Part3/data")
