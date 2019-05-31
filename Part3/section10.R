@@ -55,3 +55,5 @@ sapply(data2[,c(3,4)],sum)
 
 aggregate(승차+하차~노선번호,data2,sum)
 aggregate(승차~노선번호,data2,sum)
+
+
