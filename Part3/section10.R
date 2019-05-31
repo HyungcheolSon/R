@@ -1,4 +1,3 @@
-7subset()
 vec1 <- c(1:5)
 vec2 <-c('a','b','c','d','e')
 max(vec1)
