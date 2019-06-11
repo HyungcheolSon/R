@@ -1,0 +1,89 @@
+---
+title: "2015년 서울시민들의 불만사항"
+author: "HyungcheolSon"
+date: '2019 6 11 '
+output: html_document
+---
+```{r}
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
+```{r}
+library(stringr)
+library(RColorBrewer)
+
+dir<-("D:/workspace/R_Data_Analysis/Part2/EXCERCISE")
+file_list<-list.files(dir)
+
+data<-data.frame()
+for(file in file_list){
+  print(file)
+  temp<-readLines(paste(dir,file,sep ="\\"))
+  data<-rbind(data,temp)
+}
+
+data
+
+head(unlist(data),30)
+
+data2<-unlist(data)
+data2<-gsub("\\d+","",data2)
+data2<-gsub("서울시","",data2)
+data2<-gsub("서울","",data2)
+data2<-gsub("요청","",data2)
+data2<-gsub("제안","",data2)
+data2<-gsub(" ","",data2)
+data2<-gsub("-","",data2)
+data2
+
+write(unlist(data2),"응답소.txt")
+
+data3<-read.table("응답소.txt")
+data3
+
+wordcount<-table(data3)
+head(sort(wordcount, decreasing=T),20)
+
+data2<-gsub("Q","",data2)
+data2<-gsub("것","",data2)
+data2<-gsub("한","",data2)
+data2<-gsub("들","",data2)
+data2<-gsub("수","",data2)
+data2<-gsub("저","",data2)
+data2<-gsub("님","",data2)
+data2<-gsub("년","",data2)
+data2<-gsub("등","",data2)
+
+write(unlist(data2),"응답소_2.txt") 
+data3 <- read.table("응답소_2.txt")
+data3
+nrow(data3) 
+wordcount <- table(data3) 
+wordcount
+
+set.seed(1111)
+palete <- brewer.pal(9, "Set3") 
+
+
+```
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

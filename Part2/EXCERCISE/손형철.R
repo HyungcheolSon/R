@@ -1,0 +1,73 @@
+#EXCERCISE1
+setwd("D:/workspace/R_Data_Analysis/Part2/EXCERCISE")
+install.packages('rJava')
+library(rJava)
+install.packages("KoNLP")
+install.packages("wordcloud")
+library(KoNLP)
+library(wordcloud)
+library(stringr)
+useSejongDic()
+library(RColorBrewer)
+
+dir<-("D:/workspace/R_Data_Analysis/Part2/EXCERCISE")
+file_list<-list.files(dir)
+
+data<-data.frame()
+for(file in file_list){
+  print(file)
+  temp<-readLines(paste(dir,file,sep ="\\"))
+  data<-rbind(data,temp)
+}
+data<-sapply(data1, extractNoun,USE.NAMES = F)
+data
+
+head(unlist(data),30)
+
+data2<-unlist(data)
+data2<-gsub("\\d+","",data2)
+data2<-gsub("서울시","",data2)
+data2<-gsub("서울","",data2)
+data2<-gsub("상담내용","",data2)
+data2<-gsub("제목","",data2)
+data2<-gsub("요청","",data2)
+data2<-gsub("제안","",data2)
+data2<-gsub(" ","",data2)
+data2<-gsub("-","",data2)
+data2
+
+write(unlist(data2),"응답소.txt")
+
+data3<-read.table("응답소.txt")
+data3
+
+wordcount<-table(data3)
+head(sort(wordcount, decreasing=T),20)
+
+data2<-gsub("Q","",data2)
+data2<-gsub("것","",data2)
+data2<-gsub("한","",data2)
+data2<-gsub("들","",data2)
+data2<-gsub("수","",data2)
+data2<-gsub("저","",data2)
+data2<-gsub("님","",data2)
+data2<-gsub("년","",data2)
+data2<-gsub("등","",data2)
+data2<-gsub("이","",data2)
+
+write(unlist(data2),"응답소_2.txt") 
+data3 <- read.table("응답소_2.txt")
+data3
+nrow(data3) 
+wordcount <- table(data3) 
+wordcount
+
+set.seed(1212)
+palete <- brewer.pal(9, "Set3") 
+
+wordcloud(names(wordcount), freq=wordcount, scale=c(5,1),
+          rot.per=0.25, min.freq=1,
+          random.order=F, random.color=T, colors=palete)
+
+legend(0.2, 1, "2015년 서울시민들의 불만사항", cex=0.8, fill=NA, border=NA, bg="white" , text.col="red", text.font=1, box.col="red")
+
